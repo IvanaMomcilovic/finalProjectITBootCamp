@@ -42,7 +42,7 @@ public class CitiesTests extends BaseTest {
     //ne znam da li radi ovaj test jer je blokiran sajt
     @Test
     public void editCity() {
-        loginPage.clickEditButton(); // Super Kod :)
+        loginPage.clickEditButton();
         loginPage.writeNameOfCity(cityName);
         Assert.assertTrue(loginPage.getMessage4().getText().contains("Saved successfully"));
     }
