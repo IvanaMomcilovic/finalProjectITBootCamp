@@ -1,11 +1,13 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
+    //login, signuUp, authRouts
     @FindBy(id = "email")
     private WebElement email;
 
@@ -23,7 +25,7 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]/span")
     private WebElement logoutButton;
-
+    //signup
     @FindBy(id = "confirmPassword")
     private WebElement confirmPassword;
 
@@ -35,46 +37,6 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]/ul/li")
     private WebElement messageEmailAlreadyExists;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]/span")
-    private WebElement adminField;
-
-    @FindBy(xpath = "/html/body/div/div[3]/div/a[1]/div[2]")
-    private WebElement citiesField;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]/span")
-    private WebElement presenceOfLogOutButton;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[1]/div[3]/form/div[1]/button/span")
-    private WebElement newItemCityButton;
-
-    @FindBy(xpath = "//*[@id=\"name\"]")
-    private WebElement writeNameOfCity;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[5]/div/div/div[3]/button[2]/span")
-    private WebElement saveButton;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")
-    private WebElement messageSavedSuccessfully;
-
-    @FindBy(id = "edit")
-    private WebElement editButton;
-
-    @FindBy(xpath = "//*[@id=\"name\"]")
-    private WebElement editCity;
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div/div[3]/button[2]/span")
-    private WebElement messageEditSavedSuccessfully;
-    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]")
-    private WebElement firstRowOfCityTable;
-
-    @FindBy(id="search")
-    private WebElement searchCityField;
-
-
-    public LoginPage(WebDriver driver, WebDriverWait driverWait) {
-        super(driver, driverWait);
-    }
 
     public void pressLoginButton(String email, String password) {
         this.email.clear();
@@ -138,43 +100,82 @@ public class LoginPage extends BasePage {
         signMeUpButton.click();
     }
 
-    public WebElement pressAdminField() {
+    //cities
+    @FindBy(className = "btnAdmin")
+    private WebElement adminField;
+
+    @FindBy(className = "btnAdminCities")
+    private WebElement citiesField;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]/span")
+    private WebElement presenceOfLogOutButton;
+
+    @FindBy(className = "btnNewItem")
+    private WebElement newItemCityButton;
+
+    @FindBy(name = "name")
+    private WebElement writeNameOfCity;
+
+    @FindBy(className = "btnSave")
+    private WebElement saveCityButton;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")
+    private WebElement messageSavedSuccessfully;
+
+    @FindBy(id = "edit")
+    private WebElement editButton;
+
+    @FindBy(className = "text-left")
+    private WebElement editCity;
+
+    @FindBy(id = "search")
+    private WebElement searchCityField;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div/div[3]/button[2]/span")
+    private WebElement messageEditSavedSuccessfully;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")
+    private WebElement cityNameEdited;
+
+    @FindBy(xpath = "//*[@id=\"delete\"]")
+    private WebElement deleteCityButton;
+
+    @FindBy(css = "#app > div.v-dialog__content.v-dialog__content--active > div > div > div.v-card__actions > button.v-btn.v-btn--text.theme--light.v-size--default.red--text.text--lighten3")
+    private WebElement confirmDeleteCity;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")
+    private WebElement confirmMessageDeleteCity;
+
+    public WebElement getAdminField() {
         return adminField;
     }
 
-    public void openAdminField() {
-        adminField.click();
-    }
 
-    public WebElement pressCitiesField() {
+    public WebElement getCitiesField() {
         return citiesField;
     }
 
-    public void openCitiesField() {
-        citiesField.click();
-    }
 
     public boolean presenceOfLogOutButton() {
         return logoutButton.isDisplayed();
     }
 
-    public WebElement pressNewItemCityButton() {
+    public WebElement getNewItemCityButton() {
         return newItemCityButton;
     }
 
-    public void openNewItemCityButton() {
-        newItemCityButton.click();
+    public WebElement getWriteNameOfCity() {
+        return writeNameOfCity;
     }
 
-    public void writeNameOfCity(String city) {
-        this.name.clear();
-        this.name.sendKeys(city);
-        saveButton.click();
+    public WebElement getSaveCityButton() {
+        return saveCityButton;
     }
 
-    //  public WebElement pressEditButton() {
-    //    return editButton;
-    //}
+    public WebElement getMessageSavedSuccessfully() {
+        return messageSavedSuccessfully;
+    }
+
     public void clickEditButton() {
         editButton.click();
     }
@@ -183,7 +184,146 @@ public class LoginPage extends BasePage {
         return editCity;
     }
 
+    public WebElement getSearchCityField() {
+        return searchCityField;
+    }
+
+    public WebElement getCityNameEdited() {
+        return cityNameEdited;
+    }
+
+    public WebElement getDeleteCityButton() {
+        return deleteCityButton;
+    }
+
+    public WebElement getConfirmDeleteCity() {
+        return confirmDeleteCity;
+    }
+
     public WebElement getMessage4() {
         return messageEditSavedSuccessfully;
+    }
+
+    public WebElement getConfirmMessageDeleteCity() {
+        return confirmMessageDeleteCity;
+    }
+
+    //locale
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button/span")
+    private WebElement languageField;
+    @FindBy(className = "btnEN")
+    private WebElement en;
+
+    @FindBy(className = "btnES")
+    private WebElement es;
+
+    @FindBy(className = "btnFR")
+    private WebElement fr;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[1]/h1")
+    private WebElement headerText;
+
+
+    public LoginPage(WebDriver driver, WebDriverWait driverWait) {
+        super(driver, driverWait);
+    }
+
+    public WebElement getLanguageField() {
+        return languageField;
+    }
+
+    public WebElement getEn() {
+        return en;
+    }
+
+    public WebElement getEs() {
+        return es;
+    }
+
+    public WebElement getFr() {
+        return fr;
+    }
+
+    public WebElement getHeaderText() {
+        return headerText;
+    }
+
+    //profile
+    @FindBy(id = "phone")
+    private WebElement phone;
+
+    @FindBy(id = "city")
+    private WebElement city;
+
+    @FindBy(id = "country")
+    private WebElement country;
+
+    @FindBy(id = "urlTwitter")
+    private WebElement twitter;
+
+    @FindBy(id = "urlGitHub")
+    private WebElement github;
+
+    @FindBy(className = "btnClose")
+    private WebElement closeMessage;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
+    private WebElement myProfileButton;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div/div[8]/button")
+    private WebElement saveProfileButton;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")
+    private WebElement messageSuccessfullySaved;
+
+
+    public WebElement getPhone() {
+        return phone;
+    }
+
+    public WebElement getCity() {
+        return city;
+    }
+
+    public WebElement getCountry() {
+        return country;
+    }
+
+    public WebElement getTwitter() {
+        return twitter;
+    }
+
+    public WebElement getGithub() {
+        return github;
+    }
+
+    public WebElement getMessageSuccessfullySaved() {
+        return messageSuccessfullySaved;
+    }
+
+    public WebElement getCloseMessage() {
+        return closeMessage;
+    }
+
+    public WebElement getMyProfileButton() {
+        return myProfileButton;
+    }
+
+
+    public void myProfileFillForm(String phone, String city, String country, String twitter, String github) throws InterruptedException {
+
+        Thread.sleep(2500);
+        this.phone.sendKeys(phone);
+        Thread.sleep(2500);
+        this.city.sendKeys(Keys.CONTROL + "a");
+        this.city.sendKeys(Keys.DELETE);
+        this.city.sendKeys(city);
+        this.city.sendKeys(Keys.ARROW_DOWN);
+        this.city.sendKeys(Keys.ENTER);
+        Thread.sleep(2500);
+        this.country.sendKeys(country);
+        this.twitter.sendKeys(twitter);
+        this.github.sendKeys(github);
+        saveProfileButton.click();
     }
 }

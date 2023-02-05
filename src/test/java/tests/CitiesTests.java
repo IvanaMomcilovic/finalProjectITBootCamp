@@ -7,6 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.Objects;
+
 import java.util.List;
 
 public class CitiesTests extends BaseTest {
@@ -18,9 +20,9 @@ public class CitiesTests extends BaseTest {
         super.beforeMethod();
         homePage.pressLoginField().click();
         loginPage.pressLoginButton("admin@admin.com", "12345");
-        loginPage.pressAdminField().click();
-        loginPage.pressCitiesField().click();
-        loginPage.pressNewItemCityButton().click();
+        loginPage.getAdminField().click();
+        loginPage.getCitiesField().click();
+        loginPage.getNewItemCityButton().click();
 
         faker = new Faker();
         cityName = faker.address().cityName(); // ovo ce kada se pokrene na nivou klase jednom napravi novi grad
@@ -35,27 +37,37 @@ public class CitiesTests extends BaseTest {
 
     @Test
     public void createNewCityTest() {
-        loginPage.writeNameOfCity(cityName);
-        Assert.assertTrue(loginPage.getMessage4().getText().contains("Saved successfully"));
+        loginPage.getWriteNameOfCity();
+        loginPage.getSaveCityButton();
+        Assert.assertTrue(loginPage.getMessageSavedSuccessfully().getText().contains("Saved successfully"));
     }
 
-    //ne znam da li radi ovaj test jer je blokiran sajt
+
     @Test
-    public void editCity() {
+    public void editCityTest() {
+        createNewCityTest();
         loginPage.clickEditButton();
-        loginPage.writeNameOfCity(cityName);
-        Assert.assertTrue(loginPage.getMessage4().getText().contains("Saved successfully"));
+        loginPage.getWriteNameOfCity().sendKeys("edited");
+        loginPage.getSaveCityButton().click();
+        Assert.assertTrue(loginPage.getMessageSavedSuccessfully().getText().contains("Saved successfully"));
     }
 
-    //ne znam da uradim test #4
-//@Test
-    //  public void newCityOntheTopOfFirstRow(){
-//}
+    @Test
+    public void searchCity() {
+        createNewCityTest();
+        editCityTest();
+        loginPage.getSearchCityField().sendKeys(cityName + "edited");
+        loginPage.getCityNameEdited().click();
+        Assert.assertTrue(loginPage.getCityNameEdited().getText().equals(loginPage.getSearchCityField().getAttribute("value")));
+    }
 
     @Test
-    public void deleteCity() {
-        loginPage.writeNameOfCity(cityName);
-
+    public void deleteCityTest() {
+        createNewCityTest();
+        loginPage.getSearchCityField().sendKeys(cityName);
+        loginPage.getCityNameEdited().click();
+        loginPage.getConfirmDeleteCity();
+        Assert.assertTrue(loginPage.getConfirmMessageDeleteCity().getText().contains("Deleted successfully"));
     }
 
 }
